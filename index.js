@@ -2,9 +2,12 @@ const Discord = require('discord.js');
 
 const bot = new Discord.Client();
 
-const token = HEROKU;
 
 const PREFix = '!';
+
+const aws = require('aws-sdk');
+
+const token = process.env.HEROKU;
 
 bot.on('ready', () => {
 	console.log('Bot is online');
