@@ -5,8 +5,6 @@ const bot = new Discord.Client();
 
 const PREFix = '!';
 
-const aws = require('aws-sdk');
-
 const token = process.env.HEROKU;
 
 bot.on('ready', () => {
