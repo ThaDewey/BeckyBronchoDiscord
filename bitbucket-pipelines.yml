@@ -11,7 +11,13 @@
 pipelines:
   default:
     - step:
-        script: # Modify the commands below to build your repository.
+        name: Create artifact
+        script:
+          - tar czfv application.tgz dist/
+        artifacts:
+          - application.tgz
+    - step:
+       script: # Modify the commands below to build your repository.
          - pipe: atlassian/heroku-deploy:1.1.1
            variables:
              HEROKU_API_KEY:  $HEROKU_API_KEY
