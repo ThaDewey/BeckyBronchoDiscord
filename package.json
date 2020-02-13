@@ -6,15 +6,19 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Robert Wall",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",
-    "eris": "^0.11.2",
     "express": "^4.17.1"
   },
   "devDependencies": {},
-  "description": ""
+  "description": "- [How to Make a Discord Bot: an Overview and Tutorial](https://www.toptal.com/chatbot/how-to-make-a-discord-bot)\r - [Discord API Reference](https://discordapp.com/developers/docs/reference)\r - [application Informaiton](https://discordapp.com/developers/applications/471730407537377316/oauth)\r - [Eris GitHub](https://github.com/abalabahaha/eris)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://ThaDewey@bitbucket.org/ThaDewey/becky-broncho-discord.git"
+  },
+  "homepage": "https://bitbucket.org/ThaDewey/becky-broncho-discord#readme"
 }
