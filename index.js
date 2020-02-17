@@ -5,6 +5,8 @@ const bot = new Discord.Client();
 
 const PREFIX = '!';
 
+const superagent = require('superagent')
+
 
 
 const token = process.env.HEROKU;
@@ -12,6 +14,32 @@ const token = process.env.HEROKU;
 bot.on('ready', () => {
 	console.log('Bot is online');
 });
+
+
+const fs = require('fs');
+bot.commands = new Discord.Collection();
+bot.aliases = new Discord.Collection();
+
+fs.readdir('./commands/', (err, files) => {
+	if (err) { console.log("Error: ".err); }
+	//console.log("f:".files.length);
+
+	let jsFile = files.filter(f => f.split(".").pop() === "js")
+
+
+	if (jsFile.length <= 0) {
+		return console.log("[LOGS] couldnt't Find commands! ");
+	}
+
+	jsFile.forEach((f, i) => {
+		let pull = require("./commands/" + f);
+		bot.commands.set(pull.config.name, pull);
+		pull.config.aliases.forEach(alias => {
+			bot.aliases.set(alias, pull.config.name)
+		});
+	});
+});
+
 
 bot.on('message', async msg => {
 	if (msg.author.bot || msg.channel.type === "dm") {
@@ -22,46 +50,9 @@ bot.on('message', async msg => {
 	let msgArray = msg.content.split(" ");
 	let cmd = msgArray[0];
 	let arg = msgArray.slice[1];
+	let commandFile = bot.commands.get(cmd.slice(prefix.length)) || bot.commands.get(bot.aliases.get(prefix.length));
 
-	if (cmd === prefix + 'hello') {
-		return msg.channel.send("Hello");
-	}
-
-	if (cmd === prefix + 'serverInfo') {
-		let sEmbed =  new Discord.RichEmbed()
-		.setColor(colors.cyan)
-		.setTitle('Server Info')
-		.setURL('https://discord.js.org/')
-		.setAuthor('Some name', 'https://i.imgur.com/wSTFkRM.png', 'https://discord.js.org')
-		.setDescription('Some description here')
-		.setThumbnail('https://i.imgur.com/wSTFkRM.png')
-		.addField('Regular field title', 'Some value here')
-		.addBlankField()
-		.addField('Inline field title', 'Some value here', true)
-		.addField('Inline field title', 'Some value here', true)
-		.addField('Inline field title', 'Some value here', true)
-		.setImage('https://i.imgur.com/wSTFkRM.png')
-		.setTimestamp()
-		.setFooter('Some footer text here', 'https://i.imgur.com/wSTFkRM.png');
-		msg.channel.send(sEmbed);
-	}
-
-	if (cmd === prefix + 'userInfo') {
-		let sEmbed =  new Discord.RichEmbed()
-		.setColor(colors.red_light)
-		.setTitle('User Info')
-		.setThumbnail(msg.guild.iconURL)
-		.setAuthor(`${msg.author.username} Info`, msg.author.displayAvatarURL)
-		.addField("**Username:**", `${msg.author.username}`, true)
-		.addField("**Discriminator:**", `${msg.author.discriminator}`, true)
-		.addField("**ID:**", `${msg.author.id}`, true)
-		.addField("**Status:**", `${msg.author.presence.status}`, true)
-		.addField("**Created At:**", `${msg.author.createdAt}`, true)
-		.setFooter(`TestBot | Footer`, bot.user.displayAvatarURL);
-		msg.channel.send(sEmbed);
-	}
-
-
+	if (commandFile) { commandFile.run(bot, msg, arg); }
 
 });
 
