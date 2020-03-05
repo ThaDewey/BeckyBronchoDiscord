@@ -13,6 +13,7 @@ module.exports.run = async (bot, msg, arg)=>{
 	let { body } = await superagent.get('https://api.thecatapi.com/v1/images/search');
 	//console.log(body[0]['url']);
 	if (!{ body }) {
+		
 		return msg.channel.send("Oh, Hell's no, like the cats disappeared. No one gets any cats!");
 	}
 
@@ -28,5 +29,8 @@ module.exports.run = async (bot, msg, arg)=>{
 
 module.exports.config ={
 	name: "cat",
-	aliases: ["cats", "Cat","meow"]
+	aliases: ["cats", "Cat","meow"],
+	description: "Give the person whos ask for it an image of a cat.",
+	usage: "!usage",
+	accessableby:"members"
 }

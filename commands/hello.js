@@ -7,7 +7,6 @@ const PREFIX = '!';
 const superagent = require('superagent')
 
 module.exports.run = async (bot, msg, arg)=>{
-
 	return msg.channel.send("Like hello!");
 }
 

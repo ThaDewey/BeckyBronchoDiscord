@@ -42,6 +42,7 @@ fs.readdir('./commands/', (err, files) => {
 
 
 bot.on('message', async msg => {
+
 	if (msg.author.bot || msg.channel.type === "dm") {
 		return;
 	}
@@ -49,10 +50,11 @@ bot.on('message', async msg => {
 	let prefix = PREFIX;
 	let msgArray = msg.content.split(" ");
 	let cmd = msgArray[0];
-	let arg = msgArray.slice[1];
-	let commandFile = bot.commands.get(cmd.slice(prefix.length)) || bot.commands.get(bot.aliases.get(prefix.length));
-
-	if (commandFile) { commandFile.run(bot, msg, arg); }
+	let args = msgArray.slice(1);
+	let commandFile = bot.commands.get(cmd.slice(PREFIX.length)) || bot.commands.get(bot.aliases.get(PREFIX.length));
+	if (commandFile){
+		 commandFile.run(bot, msg, args);
+	}
 
 });
 
