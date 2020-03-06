@@ -49,7 +49,7 @@ bot.on('message', async msg => {
 
 	let prefix = PREFIX;
 	let msgArray = msg.content.split(" ");
-	let cmd = msgArray[0];
+	let cmd = msgArray[0].toLocaleLowerCase();
 	let args = msgArray.slice(1);
 	let commandFile = bot.commands.get(cmd.slice(PREFIX.length)) || bot.commands.get(bot.aliases.get(PREFIX.length));
 	if (commandFile){
